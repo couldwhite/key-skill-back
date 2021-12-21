@@ -28,9 +28,10 @@ public class ExerciseController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));
         }
-        exerciseRepository.addExercise(createExerciseRequest.getCreatingWay(),
-                new Timestamp(System.currentTimeMillis()), createExerciseRequest.getMasOfSymbols(),
-                createExerciseRequest.getName(), Long.parseLong(createExerciseRequest.getIdLevel()));
+        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),createExerciseRequest.getKeyZone(),
+                createExerciseRequest.getMaxTimeKick(), createExerciseRequest.getMaxErrors(),
+                createExerciseRequest.getName(), createExerciseRequest.getMasOfSymbols(), createExerciseRequest.getCreatingWay());
+        exerciseRepository.save(exercise);
         return ResponseEntity.ok(new MessageResponse("Exercise CREATED"));
     }
 

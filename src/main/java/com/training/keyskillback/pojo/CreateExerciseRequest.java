@@ -2,17 +2,44 @@ package com.training.keyskillback.pojo;
 
 public class CreateExerciseRequest {
 
+    private int levelNumber;
+    private int keyZone;
+    private int maxTimeKick;
+    private int maxErrors;
     private String name;
     private String masOfSymbols;
     private String creatingWay;
-    private String idLevel;
 
-    public String getIdLevel() {
-        return idLevel;
+    public int getLevelNumber() {
+        return levelNumber;
     }
 
-    public void setIdLevel(String idLevel) {
-        this.idLevel = idLevel;
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
+    public int getKeyZone() {
+        return keyZone;
+    }
+
+    public void setKeyZone(int keyZone) {
+        this.keyZone = keyZone;
+    }
+
+    public int getMaxTimeKick() {
+        return maxTimeKick;
+    }
+
+    public void setMaxTimeKick(int maxTimeKick) {
+        this.maxTimeKick = maxTimeKick;
+    }
+
+    public int getMaxErrors() {
+        return maxErrors;
+    }
+
+    public void setMaxErrors(int maxErrors) {
+        this.maxErrors = maxErrors;
     }
 
     public String getName() {
