@@ -14,6 +14,7 @@ public class Exercise {
     private Long id;
     private int levelNumber;
     private int keyZone;
+    private int length;
     private int maxTimeKick;
     private int maxErrors;
     private String name;
@@ -33,7 +34,7 @@ public class Exercise {
     public Exercise() {
     }
 
-    public Exercise(int levelNumber, int keyZone, int maxTimeKick, int maxErrors, String name, String masOfSymbols, String creatingWay) {
+    public Exercise(int levelNumber, int keyZone,int length, int maxTimeKick, int maxErrors, String name, String masOfSymbols, String creatingWay) {
         this.levelNumber = levelNumber;
         this.keyZone = keyZone;
         this.maxTimeKick = maxTimeKick;
@@ -41,6 +42,7 @@ public class Exercise {
         this.name = name;
         this.masOfSymbols = masOfSymbols;
         this.creatingWay = creatingWay;
+        this.length = length;
     }
 
     public int getLevelNumber() {

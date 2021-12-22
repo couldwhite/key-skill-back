@@ -4,6 +4,7 @@ public class CreateExerciseRequest {
 
     private int levelNumber;
     private int keyZone;
+    private int length;
     private int maxTimeKick;
     private int maxErrors;
     private String name;
@@ -24,6 +25,14 @@ public class CreateExerciseRequest {
 
     public void setKeyZone(int keyZone) {
         this.keyZone = keyZone;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
     public int getMaxTimeKick() {

@@ -28,7 +28,7 @@ public class ExerciseController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));
         }
-        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),createExerciseRequest.getKeyZone(),
+        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),createExerciseRequest.getKeyZone(), createExerciseRequest.getLength(),
                 createExerciseRequest.getMaxTimeKick(), createExerciseRequest.getMaxErrors(),
                 createExerciseRequest.getName(), createExerciseRequest.getMasOfSymbols(), createExerciseRequest.getCreatingWay());
         exerciseRepository.save(exercise);
@@ -48,6 +48,7 @@ public class ExerciseController {
         return ResponseEntity.ok(new MessageResponse("Exercise DELETED"));
     }
 
+    @CrossOrigin
     @ResponseBody
     @Transactional
     @GetMapping("/getAllExercises")
