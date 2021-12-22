@@ -13,7 +13,7 @@ public class Exercise {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int levelNumber;
-    private int keyZone;
+    private String keyZone;
     private int length;
     private int maxTimeKick;
     private int maxErrors;
@@ -34,7 +34,7 @@ public class Exercise {
     public Exercise() {
     }
 
-    public Exercise(int levelNumber, int keyZone,int length, int maxTimeKick, int maxErrors, String name, String masOfSymbols, String creatingWay) {
+    public Exercise(int levelNumber, String keyZone,int length, int maxTimeKick, int maxErrors, String name, String masOfSymbols, String creatingWay) {
         this.levelNumber = levelNumber;
         this.keyZone = keyZone;
         this.maxTimeKick = maxTimeKick;
@@ -53,11 +53,11 @@ public class Exercise {
         this.levelNumber = levelNumber;
     }
 
-    public int getKeyZone() {
+    public String getKeyZone() {
         return keyZone;
     }
 
-    public void setKeyZone(int keyZone) {
+    public void setKeyZone(String keyZone) {
         this.keyZone = keyZone;
     }
 

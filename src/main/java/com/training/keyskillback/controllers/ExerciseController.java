@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,8 @@ public class ExerciseController {
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));
         }
-        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),createExerciseRequest.getKeyZone(), createExerciseRequest.getLength(),
+        String keyZone = Arrays.toString(createExerciseRequest.getKeyZone()).replaceAll("\\[|\\]|\\,","");
+        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),keyZone, createExerciseRequest.getLength(),
                 createExerciseRequest.getMaxTimeKick(), createExerciseRequest.getMaxErrors(),
                 createExerciseRequest.getName(), createExerciseRequest.getMasOfSymbols(), createExerciseRequest.getCreatingWay());
         exerciseRepository.save(exercise);

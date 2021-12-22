@@ -3,7 +3,7 @@ package com.training.keyskillback.pojo;
 public class CreateExerciseRequest {
 
     private int levelNumber;
-    private int keyZone;
+    private int[] keyZone;
     private int length;
     private int maxTimeKick;
     private int maxErrors;
@@ -19,11 +19,11 @@ public class CreateExerciseRequest {
         this.levelNumber = levelNumber;
     }
 
-    public int getKeyZone() {
+    public int[] getKeyZone() {
         return keyZone;
     }
 
-    public void setKeyZone(int keyZone) {
+    public void setKeyZone(int[] keyZone) {
         this.keyZone = keyZone;
     }
 
