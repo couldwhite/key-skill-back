@@ -1,5 +1,6 @@
 package com.training.keyskillback.controllers;
 
+import com.training.keyskillback.generator.Generator;
 import com.training.keyskillback.models.Exercise;
 import com.training.keyskillback.pojo.CreateExerciseRequest;
 import com.training.keyskillback.pojo.MessageResponse;
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/exercise")
 public class ExerciseController {
@@ -27,12 +29,18 @@ public class ExerciseController {
         if (exerciseRepository.existsByName(createExerciseRequest.getName())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is exist"));
+                    .body(new MessageResponse("Error: Exercise is exist"));
         }
         String keyZone = Arrays.toString(createExerciseRequest.getKeyZone()).replaceAll("\\[|\\]|\\,","");
+        String masOfSymbols;
+        if ("Автоматически".equals(createExerciseRequest.getCreatingWay())) {
+            masOfSymbols = Generator.generateRandomString(createExerciseRequest.getLength(), keyZone);
+        } else {
+            masOfSymbols = createExerciseRequest.getMasOfSymbols();
+        }
         Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),keyZone, createExerciseRequest.getLength(),
                 createExerciseRequest.getMaxTimeKick(), createExerciseRequest.getMaxErrors(),
-                createExerciseRequest.getName(), createExerciseRequest.getMasOfSymbols(), createExerciseRequest.getCreatingWay());
+                createExerciseRequest.getName(), masOfSymbols, createExerciseRequest.getCreatingWay());
         exerciseRepository.save(exercise);
         return ResponseEntity.ok(new MessageResponse("Exercise CREATED"));
     }
@@ -50,12 +58,19 @@ public class ExerciseController {
         return ResponseEntity.ok(new MessageResponse("Exercise DELETED"));
     }
 
-    @CrossOrigin
+
     @ResponseBody
     @Transactional
     @GetMapping("/getAllExercises")
     public List getAllExercises() {
         List<Exercise> exerciseList = exerciseRepository.findAll();
         return exerciseList;
+    }
+
+    @ResponseBody
+    @GetMapping("/getExerciseById")
+    public Exercise getExercise(@RequestParam String id) {
+        Exercise exercise = exerciseRepository.getById(Long.parseLong(id));
+        return exercise;
     }
 }
