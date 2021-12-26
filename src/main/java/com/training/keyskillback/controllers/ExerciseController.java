@@ -2,9 +2,11 @@ package com.training.keyskillback.controllers;
 
 import com.training.keyskillback.generator.Generator;
 import com.training.keyskillback.models.Exercise;
+import com.training.keyskillback.models.GeneralStatistic;
 import com.training.keyskillback.pojo.CreateExerciseRequest;
 import com.training.keyskillback.pojo.MessageResponse;
 import com.training.keyskillback.repository.ExerciseRepository;
+import com.training.keyskillback.repository.GeneralStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +14,16 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/exercise")
 public class ExerciseController {
+
+    @Autowired
+    GeneralStatisticRepository generalStatisticRepository;
 
     @Autowired
     ExerciseRepository exerciseRepository;
@@ -31,6 +37,18 @@ public class ExerciseController {
                     .badRequest()
                     .body(new MessageResponse("Error: Exercise is exist"));
         }
+        String difficultyLevel;
+        if (createExerciseRequest.getLevelNumber() == 1) {
+            difficultyLevel = "Начальный";
+        } else if (createExerciseRequest.getLevelNumber() == 2) {
+            difficultyLevel = "Средний";
+        } else {
+            difficultyLevel = "Продвинутый";
+        }
+        GeneralStatistic generalStatistic = new GeneralStatistic(createExerciseRequest.getName(),
+                difficultyLevel, 0, 0);
+        generalStatisticRepository.save(generalStatistic);
+
         String keyZone = Arrays.toString(createExerciseRequest.getKeyZone()).replaceAll("\\[|\\]|\\,","");
         String masOfSymbols;
         if ("Автоматически".equals(createExerciseRequest.getCreatingWay())) {
@@ -38,10 +56,16 @@ public class ExerciseController {
         } else {
             masOfSymbols = createExerciseRequest.getMasOfSymbols();
         }
-        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),keyZone, createExerciseRequest.getLength(),
-                createExerciseRequest.getMaxTimeKick(), createExerciseRequest.getMaxErrors(),
-                createExerciseRequest.getName(), masOfSymbols, createExerciseRequest.getCreatingWay());
-        exerciseRepository.save(exercise);
+        exerciseRepository.addExercise(createExerciseRequest.getCreatingWay(), new Timestamp(new Date().getTime()),
+                keyZone, createExerciseRequest.getLength(), createExerciseRequest.getLevelNumber(), masOfSymbols,
+                createExerciseRequest.getMaxErrors(), createExerciseRequest.getMaxTimeKick(),createExerciseRequest.getName(),
+                generalStatistic.getId());
+//        Exercise exercise = new Exercise(createExerciseRequest.getLevelNumber(),keyZone, createExerciseRequest.getLength(),
+//                createExerciseRequest.getMaxTimeKick(), createExerciseRequest.getMaxErrors(),
+//                createExerciseRequest.getName(), masOfSymbols, createExerciseRequest.getCreatingWay());
+//        exerciseRepository.save(exercise);
+
+
         return ResponseEntity.ok(new MessageResponse("Exercise CREATED"));
     }
 

@@ -26,6 +26,9 @@ public class User {
     @JsonManagedReference
     private Set<Role> roles = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    private Set<UserStatistic> userStatistics;
+
     public User() {
     }
 

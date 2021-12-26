@@ -17,6 +17,12 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     Boolean existsByName(String name);
 
     @Modifying
-    @Query(value = "INSERT INTO exercises (creating_way, begin_timestamp, mas_of_symbols, name, id_level) VALUES (:b, :c, :d, :e, :f)", nativeQuery = true)
-    void addExercise(@Param("b") String b, @Param("c") Timestamp с, @Param("d") String d, @Param("e") String e, @Param("f") Long f);
+    @Query(value = "INSERT INTO exercises (creating_way, begin_timestamp, key_zone, length, level_number," +
+            " mas_of_symbols, max_errors, max_time_kick, name, general_statistic_id)" +
+            " VALUES (:creating_way, :begin_timestamp, :key_zone, :length, :level_number, " +
+                    ":mas_of_symbols, :max_errors, :max_time_kick, :name, :general_statistic_id)", nativeQuery = true)
+    void addExercise(@Param("creating_way") String creating_way, @Param("begin_timestamp") Timestamp begin_timestamp,
+                     @Param("key_zone") String key_zone, @Param("length") int length, @Param("level_number") int level_number,
+                     @Param("mas_of_symbols") String mas_of_symbols, @Param("max_errors") int max_errors,
+                     @Param("max_time_kick") int max_time_kick, @Param("name") String name, @Param("general_statistic_id") Long general_statistic_id);
 }

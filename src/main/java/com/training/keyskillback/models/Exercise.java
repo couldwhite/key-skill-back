@@ -1,10 +1,8 @@
 package com.training.keyskillback.models;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "exercises")
@@ -22,8 +20,14 @@ public class Exercise {
     private String creatingWay;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "begin_timestamp", nullable = false)
-    private Date dateOfCreating = new Date();
+    private Date dateOfCreating;
 
+    @OneToMany(mappedBy = "exercise")
+    private Set<UserStatistic> userStatistics;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "general_statistic_id", nullable = false)
+    private GeneralStatistic generalStatistic;
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.JOIN)
 //    @MapsId("idLevel")
@@ -117,4 +121,11 @@ public class Exercise {
         this.creatingWay = creatingWay;
     }
 
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
+    }
 }

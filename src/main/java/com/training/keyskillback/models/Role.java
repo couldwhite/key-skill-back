@@ -1,6 +1,9 @@
 package com.training.keyskillback.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -13,6 +16,10 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
     private RoleEnum name;
+
+    @ManyToMany(mappedBy = "roles")
+    @JsonBackReference
+    private Set<User> users;
 
     public Role() {
     }
