@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin
@@ -40,13 +43,16 @@ public class UserStatisticController {
         } else {
             difficultyLevel = "Продвинутый";
         }
+        Date execution_date = new Timestamp(new Date().getTime());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String date = dateFormat.format(new Date());
         userStatisticRepository.addUserStatistic(userStatisticRequest.getAverage_speed(), difficultyLevel, userStatisticRequest.getErrors(),
-                userStatisticRequest.getExercise_time(), length, name, userStatisticRequest.getId_exercise(), userStatisticRequest.getId_exercise());
+                userStatisticRequest.getExercise_time(), length, name, userStatisticRequest.getId_exercise(), userStatisticRequest.getId_user(), date);
     }
     @ResponseBody
     @Transactional
     @GetMapping("/getAllUserStatistic")
-    public List getAllUserStatistic(@RequestParam String id) {
+    public List<UserStatistic> getAllUserStatistic(@RequestParam String id) {
         return userStatisticRepository.findByUser_Id(Long.parseLong(id));
 
     }

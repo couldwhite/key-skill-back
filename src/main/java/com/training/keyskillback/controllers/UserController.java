@@ -59,4 +59,10 @@ public class UserController {
     public User getUserById(@RequestParam String id) {
         return userRepository.getById(Long.parseLong(id));
     }
+
+    @ResponseBody
+    @GetMapping("/getUserByName")
+    public User getUserByName(@RequestParam String name) {
+        return userRepository.getByUsername(name);
+    }
 }

@@ -1,6 +1,8 @@
 package com.training.keyskillback.models;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 @Table(name = "user_stat")
@@ -16,6 +18,7 @@ public class UserStatistic {
     private double exercise_time;
     private double average_speed;
 
+    private String execution_date;
     @ManyToOne
     @JoinColumn(name = "exercise_id", nullable = false)
     private Exercise exercise;
@@ -38,7 +41,7 @@ public class UserStatistic {
     public UserStatistic() {
     }
 
-    public UserStatistic(String name, String difficultyLevel, int length_symbols, int errors, double exercise_time, double average_speed, Exercise exercise, User user) {
+    public UserStatistic(String name, String difficultyLevel, int length_symbols, int errors, double exercise_time, double average_speed, Exercise exercise, User user, String execution_date) {
         this.name = name;
         this.difficultyLevel = difficultyLevel;
         this.length_symbols = length_symbols;
@@ -47,6 +50,7 @@ public class UserStatistic {
         this.average_speed = average_speed;
         this.exercise = exercise;
         this.user = user;
+        this.execution_date = execution_date;
     }
 
     public String getName() {
@@ -111,5 +115,21 @@ public class UserStatistic {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getExecution_date() {
+        return execution_date;
+    }
+
+    public void setExecution_date(String execution_date) {
+        this.execution_date = execution_date;
     }
 }

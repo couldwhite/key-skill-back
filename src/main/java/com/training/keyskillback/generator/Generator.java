@@ -49,7 +49,20 @@ public class Generator {
         stringBufferWithoutSpaces = stringBufferWithoutSpaces.replace(" ","");
         Random random = new Random();
         for (int i = 0; i < strLength; i++) {
-            resultStringBuffer.append(stringBuffer.charAt(random.nextInt(stringBuffer.length())));
+            if (i == 1) {
+                resultStringBuffer.append(stringBufferWithoutSpaces.charAt(random.nextInt(stringBufferWithoutSpaces.length())));
+            } else if (i != 0 && (' ' == resultStringBuffer.charAt(i-2))) {
+                resultStringBuffer.append(stringBufferWithoutSpaces.charAt(random.nextInt(stringBufferWithoutSpaces.length())));
+            } else if (i == strLength - 1 || i == strLength - 2) {
+                resultStringBuffer.append(stringBufferWithoutSpaces.charAt(random.nextInt(stringBufferWithoutSpaces.length())));
+            } else if (i > 9 && (' ' != resultStringBuffer.charAt(i-1))  && (' ' != resultStringBuffer.charAt(i-2))  && (' ' != resultStringBuffer.charAt(i-3))
+                    && (' ' != resultStringBuffer.charAt(i-4)  && (' ' != resultStringBuffer.charAt(i-5))  && (' ' != resultStringBuffer.charAt(i-6))
+                    && (' ' != resultStringBuffer.charAt(i-7))  && (' ' != resultStringBuffer.charAt(i-8))
+                    && (' ' != resultStringBuffer.charAt(i-9)) && (' ' != resultStringBuffer.charAt(i-10)))) {
+                resultStringBuffer.append(" ");
+            } else {
+                resultStringBuffer.append(stringBuffer.charAt(random.nextInt(stringBuffer.length())));
+            }
 
             if (i != 0 && (' ' == resultStringBuffer.charAt(i-1)) && (' ' == resultStringBuffer.charAt(i))) {
                 resultStringBuffer.deleteCharAt(i);

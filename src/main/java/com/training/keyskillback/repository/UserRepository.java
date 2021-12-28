@@ -18,4 +18,5 @@ import com.training.keyskillback.models.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 	Optional<User> findByUsername(String username);
 	Boolean existsByUsername(String username);
+	User getByUsername(String username);
 }

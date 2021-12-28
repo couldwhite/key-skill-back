@@ -18,17 +18,21 @@ public interface UserStatisticRepository extends JpaRepository<UserStatistic, Lo
 
     @Modifying
     @Query(value = "INSERT INTO user_stat (average_speed, difficulty_level, errors, exercise_time, length_symbols," +
-            " name, exercise_id, user_id)" +
+            " name, exercise_id, user_id, execution_date)" +
             " VALUES (:average_speed, :difficulty_level, :errors, :exercise_time, :length_symbols, " +
-            ":name, :exercise_id, :user_id)", nativeQuery = true)
+            ":name, :exercise_id, :user_id, :execution_date)", nativeQuery = true)
     void addUserStatistic(@Param("average_speed") double average_speed, @Param("difficulty_level") String difficulty_level,
                      @Param("errors") int errors, @Param("exercise_time") double exercise_time, @Param("length_symbols") int length_symbols,
                      @Param("name") String name, @Param("exercise_id") Long exercise_id,
-                     @Param("user_id") Long user_id);
+                     @Param("user_id") Long user_id, @Param("execution_date") String execution_date);
     public List<UserStatistic> findByUser_Id(Long user_id);
     @Modifying
     @Query(value = "DELETE FROM user_stat where user_id = :user_id", nativeQuery = true)
     void deleteUserStatisticById(@Param("user_id") Long user_id);
-
+    @Modifying
+    @Query(value = "DELETE FROM user_stat where exercise_id = :exercise_id", nativeQuery = true)
+    void deleteUserStatisticByExercise_Id(@Param("exercise_id") Long exercise_id);
     Boolean existsByUser_Id(Long id);
+    Boolean existsByExercise_Id(Long id);
+
 }

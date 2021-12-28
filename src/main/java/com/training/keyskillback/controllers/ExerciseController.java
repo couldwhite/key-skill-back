@@ -7,6 +7,7 @@ import com.training.keyskillback.pojo.CreateExerciseRequest;
 import com.training.keyskillback.pojo.MessageResponse;
 import com.training.keyskillback.repository.ExerciseRepository;
 import com.training.keyskillback.repository.GeneralStatisticRepository;
+import com.training.keyskillback.repository.UserStatisticRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,9 @@ public class ExerciseController {
 
     @Autowired
     ExerciseRepository exerciseRepository;
+
+    @Autowired
+    UserStatisticRepository userStatisticRepository;
 
 
     @Transactional
@@ -77,7 +81,12 @@ public class ExerciseController {
                     .badRequest()
                     .body(new MessageResponse("Error: exercises is not exist"));
         } else {
+            String name = exerciseRepository.getById(Long.parseLong(id)).getName();
+            if(userStatisticRepository.existsByExercise_Id(Long.parseLong(id))) {
+                userStatisticRepository.deleteUserStatisticByExercise_Id(Long.parseLong(id));
+            }
             exerciseRepository.deleteById(Long.parseLong(id));
+            generalStatisticRepository.deleteGeneralStatisticByExerciseName(name);
         }
         return ResponseEntity.ok(new MessageResponse("Exercise DELETED"));
     }
