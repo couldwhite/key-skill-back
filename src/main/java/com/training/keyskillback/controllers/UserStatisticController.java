@@ -1,6 +1,7 @@
 package com.training.keyskillback.controllers;
 
 import com.training.keyskillback.models.Exercise;
+import com.training.keyskillback.models.RoleEnum;
 import com.training.keyskillback.models.UserStatistic;
 import com.training.keyskillback.pojo.CreateExerciseRequest;
 import com.training.keyskillback.pojo.MessageResponse;
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @RestController
@@ -54,6 +56,11 @@ public class UserStatisticController {
     @GetMapping("/getAllUserStatistic")
     public List<UserStatistic> getAllUserStatistic(@RequestParam String id) {
         return userStatisticRepository.findByUser_Id(Long.parseLong(id));
-
+    }
+    @ResponseBody
+    @Transactional
+    @GetMapping("/count")
+    public long count(@RequestParam String id) {
+        return userStatisticRepository.findByUser_Id(Long.parseLong(id)).size();
     }
 }

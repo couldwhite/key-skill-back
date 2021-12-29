@@ -65,4 +65,11 @@ public class UserController {
     public User getUserByName(@RequestParam String name) {
         return userRepository.getByUsername(name);
     }
+
+
+    @ResponseBody
+    @GetMapping("/existByName")
+    public boolean existByName(@RequestParam String username) {
+        return userRepository.existsByUsername(username);
+    }
 }
